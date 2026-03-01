@@ -40,7 +40,7 @@ This platform simulates and processes climate sensor data from 5,000+ sensors in
 - Complete observability with Prometheus & Grafana
 
 ---
-
+![System Architecture](diag_weather.png)
 
 ---
 
