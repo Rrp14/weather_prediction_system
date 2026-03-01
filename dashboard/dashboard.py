@@ -67,6 +67,44 @@ def load_data(limit):
 
 df = load_data(limit)
 
+import pydeck as pdk
+
+st.subheader("🌍 Live Risk Map")
+
+if "lat" in df.columns and "lon" in df.columns:
+
+    color_map = {
+        "HIGH": [255, 0, 0],
+        "MEDIUM": [255, 165, 0],
+        "LOW": [0, 200, 0]
+    }
+
+    df["color"] = df["risk_level"].map(color_map)
+
+    layer = pdk.Layer(
+        "ScatterplotLayer",
+        data=df,
+        get_position='[lon, lat]',
+        get_color="color",
+        get_radius=2000,
+        pickable=True,
+    )
+
+    view_state = pdk.ViewState(
+        latitude=df["lat"].mean(),
+        longitude=df["lon"].mean(),
+        zoom=8,
+        pitch=0,
+    )
+
+    st.pydeck_chart(pdk.Deck(
+        layers=[layer],
+        initial_view_state=view_state,
+        tooltip={
+            "text": "Event: {predicted_event}\nRisk: {risk_level}\nConfidence: {confidence}"
+        }
+    ))
+
 # ------------------------------
 # Filter Data
 # ------------------------------
@@ -113,6 +151,9 @@ else:
         .sort_values("confidence", ascending=False)
         .head(20)
     )
+
+
+    
 
 # ------------------------------
 # Auto Refresh
