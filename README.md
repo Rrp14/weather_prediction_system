@@ -40,6 +40,7 @@ This platform simulates and processes climate sensor data from 5,000+ sensors in
 - Complete observability with Prometheus & Grafana
 
 ---
+## architecture
 ![System Architecture](diag_weather.png)
 
 ---
@@ -58,12 +59,14 @@ This platform simulates and processes climate sensor data from 5,000+ sensors in
 - GPU-accelerated **mDeBERTa-v3** model for zero-shot classification
 - Batch processing (32 alerts/batch) for optimal GPU utilization
 - Real-time translation to event categories
+ ![System Architecture](dashboard.png) 
 
 ### 🔥 AI-Powered Event Classification
 - **Event Types:** Heatwave, Cyclone, Flood, Storm, Normal Weather
 - **Risk Assessment:** HIGH / MEDIUM / LOW
 - **Confidence Scoring** for each prediction
 - **Zero-shot learning** - no fine-tuning required
+  ![System Architecture](dashboard2.png)
 
 ### 📊 Stream Processing
 - **5-minute tumbling windows** for aggregations
@@ -77,6 +80,8 @@ This platform simulates and processes climate sensor data from 5,000+ sensors in
 - Temperature & confidence trend visualization
 - Event distribution analytics
 - Top 20 multilingual alerts display
+-![System Architecture](monitoring.png)
+![System Architecture](monitoring2.png) 
 
 ---
 
