@@ -1,0 +1,7 @@
+venv/
+cli_env/
+nlp_venv/
+kafka/
+spark/
+__pycache__/
+*.log

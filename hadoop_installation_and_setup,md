@@ -1,0 +1,91 @@
+1)install java 
+sudo dnf install java-8-openjdk -y
+java -version
+
+2)download hadoop
+cd ~
+wget https://archive.apache.org/dist/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+tar -xzf hadoop-3.3.6.tar.gz
+mv hadoop-3.3.6 hadoop
+
+3)set environment variables
+
+nano ~/.bashrc
+
+export HADOOP_HOME=~/hadoop
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk 
+
+source ~/.bashrc
+
+4)configure hadoop
+cd ~/hadoop/etc/hadoop
+
+nano core-site.xml
+
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+
+nano hdfs-site.xml
+
+<property>
+    <name>dfs.replication</name>
+    <value>1</value>
+</property>
+
+<property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:///home/rrp/hadoopdata/namenode</value>
+</property>
+
+<property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:///home/rrp/hadoopdata/datanode</value>
+</property>
+
+
+
+nano mapred-site.xml
+
+if [ -f mapred-site.xml ]; then
+    echo "mapred-site.xml already exists"
+else
+    cp mapred-site.xml.template mapred-site.xml
+fi
+
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+
+
+nano yarn-site.xml
+
+<configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+
+
+5)create directories for namenode and datanode
+
+mkdir -p ~/hadoopdata/namenode
+mkdir -p ~/hadoopdata/datanode
+
+6)format the namenode
+hdfs namenode -format
+
+
+7)start hadoop daemons
+start-dfs.sh
+start-yarn.sh
+
+8)verify hadoop is running
+jps
+
