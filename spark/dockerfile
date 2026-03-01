@@ -1,0 +1,7 @@
+FROM bitnami/spark:latest
+
+WORKDIR /app
+
+COPY climate_stream.py .
+
+CMD ["spark-submit", "climate_stream.py"]
